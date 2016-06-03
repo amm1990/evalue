@@ -13,7 +13,11 @@ import com.iti.evalue.entities.Users;
  * @author Aya Mahmoud
  */
 public class UserBusiness {
-    UserDao ud = new UserDao();
+    
+    UserDao ud;
+    public UserBusiness() {
+        ud = new UserDao();
+    }
 
     ///used for registration service
     public String register(Users u) {
@@ -51,13 +55,11 @@ public class UserBusiness {
     }
 
     ///used for login
-    public boolean login(Users u) {
-        boolean logged = false;
-        Users user = ud.checkExists(u);
-        if(user!=null) {
-            logged = true;
-        }
-        return logged;
+    public Users login(String name, String password) {
+        Users user = new Users();
+        user.setName(name);
+        user.setPassword(password);
+        return ud.checkExists(user);
     }
     
     //used for view profile
