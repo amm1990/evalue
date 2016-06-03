@@ -20,6 +20,10 @@ public class TypeDao {
     SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
     Session session;
     
+//    public TypeDao() {
+//        session = sessionFactory.openSession();
+//    }
+    
     // Insert New Type
       public void typeAdd(Type newType){
        session = sessionFactory.openSession();
