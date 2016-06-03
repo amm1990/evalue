@@ -31,14 +31,11 @@ public class Login {
     @Path("/verify")
     public JSONObject logUser(@QueryParam("name")String name, @QueryParam("password")String password) {
         UserBusiness ub = new UserBusiness();
-        Users user = new Users();
+        Users user;
         String credentials = "invalid";
         int userId = 0;
-        boolean exists = false;
-        user.setName(name);
-        user.setPassword(password);
-        exists = ub.login(user);
-        if(exists) {
+        user = ub.login(name, password);
+        if(user!=null) {
             credentials = "valid";
             userId = user.getId();
         }
