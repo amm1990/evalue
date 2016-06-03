@@ -8,10 +8,12 @@ package com.iti.evalue.business;
 import com.iti.evalue.daos.UserDao;
 import com.iti.evalue.entities.Task;
 import com.iti.evalue.entities.Users;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -20,21 +22,27 @@ import java.util.Set;
 public class TaskBusiness {
     public List getActiveTasks(String name) {
         UserDao ud = new UserDao();
-        List tasks = null;
+        ArrayList tasks = new ArrayList();
         if(name!=null) {
             Users user = ud.selectByUser(name);
             if(user!=null) {
-                System.out.println("user " + name + " exists: " + user);
-                tasks = user.getTaskList();
+                List tasklist = user.getTaskList();
+                for(int i=0; i<tasklist.size(); i++) {
+                    Task task = (Task) tasklist.get(i);
+//                    Instant instance = task.getEndDate().toInstant();
+//                    Instant ldt = ZonedDateTime.now().toInstant();
+//                    System.out.println(ZonedDateTime.now());
+//                    if(ldt.isBefore(instance)) {
+//                        tasks.add(task);
+//                        System.out.println("task added");
+//                    }
+                    if(task.getEndDate().compareTo(new Date())>0) {
+                        tasks.add(task);
+                    }
+                }
             }
             
         }
         return tasks;
     }
 }
-//        tList.stream().map((ti) -> {
-//            tasks.add(ti);
-//            return ti;
-//        }).forEach((ti) -> {
-//            System.out.println(ti.getName());
-//        });
