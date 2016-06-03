@@ -94,4 +94,12 @@ public class UserBusiness {
         }
         return updated;
     }
+    
+    public boolean sendPasswordMail(Users user) {
+        boolean sent = false;
+        //send email code
+        user.setPassword("password");
+        ud.updateUser(user);
+        return sent;
+    }
 }

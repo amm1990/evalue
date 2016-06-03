@@ -74,14 +74,14 @@ public class Login {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/forgotpassword")
-    public JSONObject forgotPassword(@QueryParam("name") String name, @QueryParam("password") String password) {
+    public JSONObject forgotPassword(@QueryParam("name") String name) {
         JSONObject json = new JSONObject();
         UserBusiness ub = new UserBusiness();
-        String update = null;
-        update = "not_updated";
+        String update = "not_updated";
         boolean updated = false;
-        if(password!=null) {
-           updated = ub.updatePassword(name, password);
+        Users user = ub.viewUser(name);
+        if(user!=null) {
+            ub.sendPasswordMail(user);
         }
         if(updated) {
             update = "updated";
