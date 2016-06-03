@@ -7,7 +7,6 @@ package com.iti.evalue.webservices;
 
 import com.iti.evalue.business.TaskBusiness;
 import com.iti.evalue.entities.Task;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
