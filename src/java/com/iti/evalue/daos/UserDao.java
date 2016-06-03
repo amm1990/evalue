@@ -21,6 +21,10 @@ public class UserDao {
     SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
     Session session;
     
+//    public UserDao() {
+//        session = sessionFactory.openSession();
+//    }
+    
     public void userAdd(Users newUser) {
         session = sessionFactory.openSession();
         session.beginTransaction();
