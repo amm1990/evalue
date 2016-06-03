@@ -81,7 +81,7 @@ public class Login {
         boolean updated = false;
         Users user = ub.viewUser(name);
         if(user!=null) {
-            ub.sendPasswordMail(user);
+            updated = ub.sendPasswordMail(user);
         }
         if(updated) {
             update = "updated";
