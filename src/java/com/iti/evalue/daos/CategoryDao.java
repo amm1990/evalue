@@ -20,6 +20,10 @@ public class CategoryDao {
     SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
     Session session;
     
+//    public CategoryDao() {
+//        session = sessionFactory.openSession();
+//    }
+    
     // Insert New Category
       public void categoryAdd(Category newCategory){
        session = sessionFactory.openSession();
