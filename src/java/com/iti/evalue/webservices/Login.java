@@ -33,16 +33,19 @@ public class Login {
         UserBusiness ub = new UserBusiness();
         Users user = new Users();
         String credentials = "invalid";
+        int userId = 0;
         boolean exists = false;
         user.setName(name);
         user.setPassword(password);
         exists = ub.login(user);
         if(exists) {
             credentials = "valid";
+            userId = user.getId();
         }
         JSONObject jo = new JSONObject();
         try {
             jo.put("exists", credentials);
+            jo.put("id", userId);
         } catch (JSONException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }

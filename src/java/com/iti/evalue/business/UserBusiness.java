@@ -49,26 +49,7 @@ public class UserBusiness {
         }
         return exists;
     }
-    
-//    public String checkEmailAndUser(String email, String name) {
-//        String repeated=null;
-//        UserInfo user = null;
-//        user = ui.selectByEmail(email);
-//        if(user!=null) {
-//            repeated = "email";
-//        }
-//        else if(user==null) {
-//            user = ui.selectByUser(name);
-//            if(user!=null) {
-//                repeated = "name";
-//            }
-//            else {
-//                repeated = "none";
-//            }
-//        }
-//        return repeated;
-//    }
-    
+
     ///used for login
     public boolean login(Users u) {
         boolean logged = false;
@@ -88,9 +69,13 @@ public class UserBusiness {
     //used for editing profile
     public boolean updateUser(Users user) {
         boolean updated = false;
-        Users u = ud.selectByUser(user.getName());
+        Users u = ud.selectById(user.getId());
         if(u!=null) {
-            ud.updateUser(user);
+            u.setName(user.getName());
+            u.setPassword(user.getPassword());
+            u.setEmail(user.getEmail());
+            u.setGender(user.getGender());
+            ud.updateUser(u);
             updated = true;
         }
         return updated;

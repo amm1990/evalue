@@ -32,11 +32,12 @@ public class Profile {
     public JSONObject viewProfile(@QueryParam("name")String name) {
         Users user = null;
         UserBusiness ub = new UserBusiness();
+        JSONObject json = new JSONObject();
         if(name!=null && !"".equals(name)) {
             user = ub.viewUser(name);
         }
-        JSONObject json = new JSONObject();
-        try {
+        if(user!=null) {
+            try {
             //json.put("user", user);
             json.put("name", user.getName());
             json.put("password", user.getPassword());
@@ -45,6 +46,7 @@ public class Profile {
         } catch (JSONException ex) {
             Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
         return json;
     }
     
@@ -52,17 +54,18 @@ public class Profile {
     @Path("/edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public JSONObject editProfile(@QueryParam("name") String name, @QueryParam("password")String password, @QueryParam("email") String email, @QueryParam("gender") String gender) {
+    public JSONObject editProfile(@QueryParam("id") int id, @QueryParam("name") String name, @QueryParam("password")String password, @QueryParam("email") String email, @QueryParam("gender") String gender) {
         UserBusiness ub = new UserBusiness();
+        String status;
+        boolean updated;
+        JSONObject json = new JSONObject();
         Users user = new Users();
+        user.setId(id);
         user.setName(name);
         user.setPassword(password);
         user.setEmail(email);
         user.setGender(gender);
-        
-        boolean updated = ub.updateUser(user);
-        JSONObject json = new JSONObject();
-        String status;
+        updated = ub.updateUser(user);
         if(updated) {
             status = "user_modified";
         }

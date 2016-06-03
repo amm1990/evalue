@@ -31,14 +31,8 @@ public class UserDao {
     public void updateUser(Users updatedUser) {
         session = sessionFactory.openSession();
         session.beginTransaction();
-        Users user = (Users) session.createQuery("from Users where name = '" + updatedUser.getName() + "'").uniqueResult();
-        user.setName(updatedUser.getName());
-        user.setPassword(updatedUser.getPassword());
-        user.setEmail(updatedUser.getEmail());
-        user.setGender(updatedUser.getGender());
-        session.update(user);
+        session.merge(updatedUser);
         session.getTransaction().commit();
-        //session.close();
     }
     
     public boolean deleteUser(Users deletedUser) {
@@ -48,7 +42,6 @@ public class UserDao {
         if(deletedUser!=null) {
             session.delete(deletedUser);
             session.getTransaction().commit();
-            //session.close();
             deleted = true;
         }
         return deleted;
@@ -59,19 +52,17 @@ public class UserDao {
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where email = '" + email + "'").uniqueResult();
         session.getTransaction().commit();
-        //session.close();
         return user;
     }
-    
+
     public Users selectByUser(String name) {
         session = sessionFactory.openSession();
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where name = '" + name + "'").uniqueResult();
         session.getTransaction().commit();
-        //session.close();
         return user;
     }
-    
+
     public Users checkExists(Users u) {
         session = sessionFactory.openSession();
         session.beginTransaction();
@@ -80,7 +71,7 @@ public class UserDao {
         //session.close();
         return user;
     }
-    
+
     public ArrayList<Users> selectAllUsers() {
         session = sessionFactory.openSession();
         session.beginTransaction();
@@ -88,5 +79,13 @@ public class UserDao {
         ArrayList<Users> allUsers = new ArrayList<>(query.list());
         session.getTransaction().commit();
         return allUsers;
+    }
+    
+    public Users selectById(int id) {
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        Users user = (Users) session.createQuery("from Users where id = " + id).uniqueResult();
+        session.getTransaction().commit();
+        return user;
     }
 }
