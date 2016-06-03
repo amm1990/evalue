@@ -20,6 +20,10 @@ public class TaskDao {
     SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
     Session session;
     
+//    public TaskDao() {
+//        session = sessionFactory.openSession();
+//    }
+    
     public void taskAdd(Task newTask){
        session = sessionFactory.openSession();
        session.beginTransaction();
