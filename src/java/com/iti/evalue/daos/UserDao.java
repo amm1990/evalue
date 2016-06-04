@@ -26,14 +26,15 @@ public class UserDao {
 //    }
     
     public void userAdd(Users newUser) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.persist(newUser);
         session.getTransaction().commit();
+        
     }
     
     public void updateUser(Users updatedUser) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.merge(updatedUser);
         session.getTransaction().commit();
@@ -41,7 +42,7 @@ public class UserDao {
     
     public boolean deleteUser(Users deletedUser) {
         boolean deleted = false;
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         if(deletedUser!=null) {
             session.delete(deletedUser);
@@ -52,7 +53,7 @@ public class UserDao {
     }
 
     public Users selectByEmail(String email) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where email = '" + email + "'").uniqueResult();
         session.getTransaction().commit();
@@ -60,7 +61,7 @@ public class UserDao {
     }
 
     public Users selectByUser(String name) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where name = '" + name + "'").uniqueResult();
         session.getTransaction().commit();
@@ -68,7 +69,7 @@ public class UserDao {
     }
 
     public Users checkExists(Users u) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where name = '" + u.getName() + "' and password = '" + u.getPassword() + "'").uniqueResult();
         session.getTransaction().commit();
@@ -77,7 +78,7 @@ public class UserDao {
     }
 
     public ArrayList<Users> selectAllUsers() {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM Users");
         ArrayList<Users> allUsers = new ArrayList<>(query.list());
@@ -86,7 +87,7 @@ public class UserDao {
     }
     
     public Users selectById(int id) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where id = " + id).uniqueResult();
         session.getTransaction().commit();

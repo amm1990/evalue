@@ -26,7 +26,7 @@ public class CategoryDao {
     
     // Insert New Category
       public void categoryAdd(Category newCategory){
-       session = sessionFactory.openSession();
+       session = sessionFactory.getCurrentSession();
        session.beginTransaction();
        session.persist(newCategory);
        session.getTransaction().commit();
@@ -35,7 +35,7 @@ public class CategoryDao {
      
       // Select All Categories
         public ArrayList<Category> selectAllCategories() {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM Category");
         ArrayList<Category> allCategories = new ArrayList<>(query.list());
@@ -45,7 +45,7 @@ public class CategoryDao {
         
        //Update Category Info
      public void updateCategory(Category updatedCategory) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.saveOrUpdate(updatedCategory);
         session.getTransaction().commit();
@@ -55,7 +55,7 @@ public class CategoryDao {
      //Delete Category Info
      public boolean deleteCategory(Category deletedCategory) {
         boolean deleted = false;
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         if(deletedCategory!=null) {
             session.delete(deletedCategory);
@@ -68,7 +68,7 @@ public class CategoryDao {
      
      //Select from category by id
      public Category selectById(int categoryId) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Category category = (Category) session.createQuery("from Category where id = '" + categoryId + "'").uniqueResult();
         session.getTransaction().commit();

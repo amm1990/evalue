@@ -28,7 +28,7 @@ public class Registration {
     @Path("/newuser")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public JSONObject createUser(@QueryParam("name") String name, @QueryParam("password") String password, @QueryParam("email") String email, @QueryParam("gender") String gender) {
+    public JSONObject createUser(@QueryParam("name") String name, @QueryParam("password") String password, @QueryParam("email") String email, @QueryParam("gender") String gender, @QueryParam("image") String image) {
         UserBusiness ub = new UserBusiness();
         JSONObject registration = new JSONObject();
         Users user = new Users(name, password, email, gender);

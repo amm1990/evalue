@@ -26,7 +26,7 @@ public class TypeDao {
     
     // Insert New Type
       public void typeAdd(Type newType){
-       session = sessionFactory.openSession();
+       session = sessionFactory.getCurrentSession();
        session.beginTransaction();
        session.persist(newType);
        session.getTransaction().commit();
@@ -35,7 +35,7 @@ public class TypeDao {
      
       // Select All Types
         public ArrayList<Type> selectAllTypes() {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM Type");
         ArrayList<Type> allTypes = new ArrayList<>(query.list());
@@ -45,7 +45,7 @@ public class TypeDao {
         
        //Update Type Info
      public void updateType(Type updatedType) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.saveOrUpdate(updatedType);
         session.getTransaction().commit();
@@ -55,7 +55,7 @@ public class TypeDao {
      //Delete Type Info
      public boolean deleteType(Type deletedType) {
         boolean deleted = false;
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         if(deletedType!=null) {
             session.delete(deletedType);
@@ -68,7 +68,7 @@ public class TypeDao {
      
      //Select Type by id
      public Type selectById(int taskId) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Type type = (Type) session.createQuery("from Type where id = '" + taskId + "'").uniqueResult();
         session.getTransaction().commit();

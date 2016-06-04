@@ -25,7 +25,7 @@ public class TaskDao {
 //    }
     
     public void taskAdd(Task newTask){
-       session = sessionFactory.openSession();
+       session = sessionFactory.getCurrentSession();
        session.beginTransaction();
        session.persist(newTask);
        session.getTransaction().commit();
@@ -34,7 +34,7 @@ public class TaskDao {
      
       // Select All Tasks
         public ArrayList<Task> selectAllTasks() {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM Task");
         ArrayList<Task> allTasks = new ArrayList<>(query.list());
@@ -44,7 +44,7 @@ public class TaskDao {
         
        //Update Task Info
      public void updateTask(Task updatedTask) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.saveOrUpdate(updatedTask);
         session.getTransaction().commit();
@@ -54,7 +54,7 @@ public class TaskDao {
      //Delete Task Info
      public boolean deleteTask(Task deletedTask) {
         boolean deleted = false;
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         if(deletedTask!=null) {
             session.delete(deletedTask);
@@ -67,7 +67,7 @@ public class TaskDao {
      
      //Select from category by id
      public Task selectById(int taskId) {
-        session = sessionFactory.openSession();
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Task task = (Task) session.createQuery("from TaskI where id = '" + taskId + "'").uniqueResult();
         session.getTransaction().commit();
