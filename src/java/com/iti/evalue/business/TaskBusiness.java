@@ -5,6 +5,7 @@
  */
 package com.iti.evalue.business;
 
+import com.iti.evalue.daos.TaskDao;
 import com.iti.evalue.daos.UserDao;
 import com.iti.evalue.entities.Task;
 import com.iti.evalue.entities.Users;
@@ -31,8 +32,15 @@ public class TaskBusiness {
                     }
                 }
             }
-            
         }
         return tasks;
+    }
+    
+    public String addTask(Task t) {
+        
+        TaskDao td= new TaskDao();
+        td.taskAdd(t);
+        String result = "saved";    
+        return result;
     }
 }

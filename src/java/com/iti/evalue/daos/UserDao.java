@@ -8,6 +8,7 @@ package com.iti.evalue.daos;
 import com.iti.evalue.SessionFactoryProvider;
 import com.iti.evalue.entities.Users;
 import java.util.ArrayList;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -64,6 +65,9 @@ public class UserDao {
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Users user = (Users) session.createQuery("from Users where name = '" + name + "'").uniqueResult();
+        if(user!=null) {
+            Hibernate.initialize(user.getTaskList());
+        }
         session.getTransaction().commit();
         return user;
     }

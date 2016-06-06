@@ -35,6 +35,7 @@ public class UserBusiness {
         String result = "failed";
         Users u1 = null;
         Users u2 = null;
+        //need to check if parent id is null 
         if ((u.getEmail() != null) && (u.getName() != null) && (u.getGender() != null) && (u.getPassword() != null)) {
             u1 = ud.selectByEmail(u.getEmail());
             if(u1!=null && u2!=null) {

@@ -60,7 +60,7 @@ public class TypeDao {
         if(deletedType!=null) {
             session.delete(deletedType);
             session.getTransaction().commit();
-            session.close();
+//            session.close();
             deleted = true;
         }
         return deleted;
@@ -72,7 +72,7 @@ public class TypeDao {
         session.beginTransaction();
         Type type = (Type) session.createQuery("from Type where id = '" + taskId + "'").uniqueResult();
         session.getTransaction().commit();
-        session.close();
+//        session.close();
         return type;
      }
 }

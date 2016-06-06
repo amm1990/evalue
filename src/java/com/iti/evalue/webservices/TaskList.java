@@ -35,10 +35,23 @@ public class TaskList {
         JSONObject json = new JSONObject();
         TaskBusiness tb = new TaskBusiness();
         List<Task> tasks = tb.getActiveTasks(name);
-        try {
-            json.put("tasks", tasks);
-        } catch (JSONException ex) {
-            Logger.getLogger(TaskList.class.getName()).log(Level.SEVERE, null, ex);
+        for(int i=0; i<tasks.size(); i++) {
+            JSONObject jo = new JSONObject();
+            Task task = (Task) tasks.get(i);
+            try {
+                jo.put("name", task.getName());
+                jo.put("description", task.getDescription());
+                jo.put("category", task.getCategoryId().getName());
+                jo.put("startdate", task.getStartDate());
+                jo.put("enddate", task.getEndDate());
+                jo.put("type", task.getTypeId().getName());
+                jo.put("evaluation", task.getEvaluation());
+                jo.put("progress", task.getProgress());
+                String taskKey = "task" + i;
+                json.put(taskKey, jo);
+            } catch (JSONException ex) {
+                Logger.getLogger(TaskList.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return json;
     }

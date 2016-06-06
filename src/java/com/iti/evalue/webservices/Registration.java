@@ -28,10 +28,10 @@ public class Registration {
     @Path("/newuser")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public JSONObject createUser(@QueryParam("name") String name, @QueryParam("password") String password, @QueryParam("email") String email, @QueryParam("gender") String gender, @QueryParam("image") String image) {
+    public JSONObject createUser(@QueryParam("parentId") String parentId, @QueryParam("name") String name, @QueryParam("password") String password, @QueryParam("email") String email, @QueryParam("gender") String gender) {
         UserBusiness ub = new UserBusiness();
         JSONObject registration = new JSONObject();
-        Users user = new Users(name, password, email, gender);
+        Users user = new Users(parentId, name, password, email, gender);
         String registered = ub.register(user);
         try {
             registration.put("status", registered);

@@ -30,7 +30,7 @@ public class CategoryDao {
        session.beginTransaction();
        session.persist(newCategory);
        session.getTransaction().commit();
-       session.close();
+//       session.close();
       }
      
       // Select All Categories
@@ -49,7 +49,7 @@ public class CategoryDao {
         session.beginTransaction();
         session.saveOrUpdate(updatedCategory);
         session.getTransaction().commit();
-        session.close();
+//        session.close();
     }
       
      //Delete Category Info
@@ -60,7 +60,7 @@ public class CategoryDao {
         if(deletedCategory!=null) {
             session.delete(deletedCategory);
             session.getTransaction().commit();
-            session.close();
+//            session.close();
             deleted = true;
         }
         return deleted;
@@ -72,7 +72,17 @@ public class CategoryDao {
         session.beginTransaction();
         Category category = (Category) session.createQuery("from Category where id = '" + categoryId + "'").uniqueResult();
         session.getTransaction().commit();
-        session.close();
+//        session.close();
+        return category;
+    }
+     
+          //Select from category by name
+     public Category selectByName(String categoryName) {
+        session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Category category = (Category) session.createQuery("from Category where name = '" + categoryName + "'").uniqueResult();
+        session.getTransaction().commit();
+//        session.close();
         return category;
     }
 }

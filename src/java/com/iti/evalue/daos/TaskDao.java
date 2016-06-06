@@ -29,7 +29,7 @@ public class TaskDao {
        session.beginTransaction();
        session.persist(newTask);
        session.getTransaction().commit();
-       session.close();
+//       session.close();
       }
      
       // Select All Tasks
@@ -48,7 +48,7 @@ public class TaskDao {
         session.beginTransaction();
         session.saveOrUpdate(updatedTask);
         session.getTransaction().commit();
-        session.close();
+//        session.close();
     }
       
      //Delete Task Info
@@ -59,7 +59,7 @@ public class TaskDao {
         if(deletedTask!=null) {
             session.delete(deletedTask);
             session.getTransaction().commit();
-            session.close();
+//            session.close();
             deleted = true;
         }
         return deleted;
@@ -71,7 +71,7 @@ public class TaskDao {
         session.beginTransaction();
         Task task = (Task) session.createQuery("from TaskI where id = '" + taskId + "'").uniqueResult();
         session.getTransaction().commit();
-        session.close();
+//        session.close();
         return task;
     } 
 }
