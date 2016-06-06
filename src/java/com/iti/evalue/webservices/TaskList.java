@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -31,8 +32,8 @@ public class TaskList {
     @Path("/activetasks")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public JSONObject getActiveTasks(@QueryParam("name") String name) {
-        JSONObject json = new JSONObject();
+    public JSONArray getActiveTasks(@QueryParam("name") String name) {
+        JSONArray json = new JSONArray();
         TaskBusiness tb = new TaskBusiness();
         List<Task> tasks = tb.getActiveTasks(name);
         for(int i=0; i<tasks.size(); i++) {
@@ -48,7 +49,7 @@ public class TaskList {
                 jo.put("evaluation", task.getEvaluation());
                 jo.put("progress", task.getProgress());
                 String taskKey = "task" + i;
-                json.put(taskKey, jo);
+                json.put(jo);
             } catch (JSONException ex) {
                 Logger.getLogger(TaskList.class.getName()).log(Level.SEVERE, null, ex);
             }
