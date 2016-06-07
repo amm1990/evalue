@@ -37,10 +37,48 @@ public class TaskBusiness {
     }
     
     public String addTask(Task t) {
-        
         TaskDao td= new TaskDao();
         td.taskAdd(t);
+//        List tasks = t.getOwnerId().getTaskList();
+//        tasks.add(t);
+//        System.out.println(tasks);
+        UserDao ud = new UserDao();
+//        
+        Users u = t.getOwnerId();
+        u.getTaskList().add(t);
+        ud.updateUser(u);
+        Task task = td.selectById(t.getId());
+        task.getUsersList().add(u);
+        td.updateTask(task);
         String result = "saved";    
         return result;
+    }
+    
+        // get task  by owner_id & task-name &     user-name
+    public Task getTaskByNameAndOwnerName(String taskName , String userName){
+        
+        UserBusiness ub = new UserBusiness();
+        int userId = ub.getUserIdByName(userName);
+        Task task;
+        TaskDao t = new TaskDao();
+        int taskId =  t.selectByOwnerIdAndTaskName(userId, taskName);
+        task = t.selectById(taskId);
+        return task;
+    }
+    
+    // insert evaluation field
+    public boolean insertEvaluationField(Float evaluation, String userName , String taskName)
+    {
+        boolean b = false;
+        TaskDao td = new TaskDao();
+        Task t = this.getTaskByNameAndOwnerName(taskName, userName);
+        if(t != null)
+        {
+        t.setEvaluation(evaluation);
+        td.updateTask(t);
+        b = true;
+        }
+        else b = false;
+        return b;
     }
 }

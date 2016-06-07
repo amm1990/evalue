@@ -142,4 +142,12 @@ public class UserBusiness {
         ud.updateUser(user);
         return sent;
     }
+        // get user id for achievement service..    
+    public int getUserIdByName(String userName)
+    {
+        int uid;
+        Users u = ud.selectByUser(userName);
+        uid =  u.getId();
+        return uid;
+    }
 }

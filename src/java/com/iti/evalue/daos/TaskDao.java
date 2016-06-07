@@ -8,6 +8,8 @@ package com.iti.evalue.daos;
 import com.iti.evalue.SessionFactoryProvider;
 import com.iti.evalue.entities.Task;
 import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -69,9 +71,25 @@ public class TaskDao {
      public Task selectById(int taskId) {
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        Task task = (Task) session.createQuery("from TaskI where id = '" + taskId + "'").uniqueResult();
+        Task task = (Task) session.createQuery("from Task where id = '" + taskId + "'").uniqueResult();
+        if(task!=null) {
+            Hibernate.initialize(task.getUsersList());
+        }
         session.getTransaction().commit();
 //        session.close();
         return task;
     } 
+     
+         //select task id by owner_id and task_name
+     public int selectByOwnerIdAndTaskName(int ownerId , String taskName){
+         
+       session = sessionFactory.openSession();
+        session.beginTransaction();
+        Task task = (Task) session.createQuery("from Task where ownerId = '" + ownerId + "' and name = '" + taskName + "'" ).uniqueResult();
+        int task_id = task.getId();
+        session.getTransaction().commit();
+        session.close();
+        return task_id;  
+            
+     }
 }
