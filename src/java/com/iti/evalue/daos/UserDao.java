@@ -19,19 +19,17 @@ import org.hibernate.SessionFactory;
  */
 public class UserDao {
     
-    SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    SessionFactory sessionFactory;
     Session session;
-    
-//    public UserDao() {
-//        session = sessionFactory.openSession();
-//    }
+    public UserDao() {
+        sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    }
     
     public void userAdd(Users newUser) {
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.persist(newUser);
         session.getTransaction().commit();
-        
     }
     
     public void updateUser(Users updatedUser) {
@@ -67,6 +65,7 @@ public class UserDao {
         Users user = (Users) session.createQuery("from Users where name = '" + name + "'").uniqueResult();
         if(user!=null) {
             Hibernate.initialize(user.getTaskList());
+            Hibernate.initialize(user.getTaskList1());
         }
         session.getTransaction().commit();
         return user;

@@ -18,9 +18,8 @@ public class CategoryBusiness {
         cd = new CategoryDao();
     }
     
-    public Category getCategoryId(String name) {
-        CategoryDao cd = new CategoryDao();
-        Category category= cd.selectByName(name);
+    public Category getCategoryByName(String name) {
+        Category category = cd.selectByName(name);
         return category;
     }
 }

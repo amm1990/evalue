@@ -109,17 +109,15 @@ public class Task implements Serializable {
         this.progress = progress;
     }
     
-    public Task(String name, String description,Category c,Date startDate, Date endDate,Type t, Users u ,float evaluation,String progress) {
-        this.name = name;
+    public Task(String taskName, String description, Category category, Type type, Date startDate, Date endDate, Users owner) {
+        this.name = taskName;
         this.description = description;
-        this.setCategoryId(c);
+        this.categoryId = category;
+        this.typeId = type;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.setTypeId(t);
-        this.setOwnerId(u);
-        this.evaluation= evaluation;
-        this.progress = progress;
-    }
+        this.ownerId = owner;
+    } 
 
     public Integer getId() {
         return id;

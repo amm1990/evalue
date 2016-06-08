@@ -18,8 +18,14 @@ import java.util.List;
  * @author Aya Mahmoud
  */
 public class TaskBusiness {
+    TaskDao td;
+    UserDao ud;;
+    public TaskBusiness() {
+        td = new TaskDao();
+        ud = new UserDao();
+    }
     public List getActiveTasks(String name) {
-        UserDao ud = new UserDao();
+        
         ArrayList tasks = new ArrayList();
         if(name!=null) {
             Users user = ud.selectByUser(name);
@@ -36,20 +42,10 @@ public class TaskBusiness {
         return tasks;
     }
     
-    public String addTask(Task t) {
-        TaskDao td= new TaskDao();
-        td.taskAdd(t);
-//        List tasks = t.getOwnerId().getTaskList();
-//        tasks.add(t);
-//        System.out.println(tasks);
-        UserDao ud = new UserDao();
-//        
-        Users u = t.getOwnerId();
-        u.getTaskList().add(t);
-        ud.updateUser(u);
-        Task task = td.selectById(t.getId());
-        task.getUsersList().add(u);
-        td.updateTask(task);
+    public String addTask(Task task) {
+        task.setEvaluation(0);
+        task.setProgress("Begining");
+        td.taskAdd(task);
         String result = "saved";    
         return result;
     }

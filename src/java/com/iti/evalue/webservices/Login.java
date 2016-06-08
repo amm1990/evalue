@@ -34,15 +34,21 @@ public class Login {
         Users user;
         String credentials = "invalid";
         int userId = 0;
+        int parentId = 0;
         user = ub.login(name, password);
         if(user!=null) {
             credentials = "valid";
             userId = user.getId();
+            Users parent = user.getParentId();
+            if(parent!=null) {
+                parentId = parent.getId();
+            }
         }
         JSONObject jo = new JSONObject();
         try {
             jo.put("exists", credentials);
             jo.put("id", userId);
+            jo.put("parent_id", parentId);
         } catch (JSONException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }

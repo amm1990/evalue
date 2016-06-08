@@ -17,12 +17,12 @@ import org.hibernate.SessionFactory;
  * @author Aya Mahmoud
  */
 public class CategoryDao {
-    SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    SessionFactory sessionFactory;
     Session session;
     
-//    public CategoryDao() {
-//        session = sessionFactory.openSession();
-//    }
+    public CategoryDao() {
+        sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    }
     
     // Insert New Category
       public void categoryAdd(Category newCategory){

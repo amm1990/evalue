@@ -8,7 +8,6 @@ package com.iti.evalue.daos;
 import com.iti.evalue.SessionFactoryProvider;
 import com.iti.evalue.entities.Task;
 import java.util.ArrayList;
-import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,12 +18,12 @@ import org.hibernate.SessionFactory;
  * @author Aya Mahmoud
  */
 public class TaskDao {
-    SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    SessionFactory sessionFactory;
     Session session;
     
-//    public TaskDao() {
-//        session = sessionFactory.openSession();
-//    }
+    public TaskDao() {
+        sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    }
     
     public void taskAdd(Task newTask){
        session = sessionFactory.getCurrentSession();

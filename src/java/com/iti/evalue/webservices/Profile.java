@@ -35,6 +35,7 @@ public class Profile {
         JSONObject json = new JSONObject();
         if(name!=null && !"".equals(name)) {
             user = ub.viewUser(name);
+            System.out.println(user.getTaskList1());
         }
         if(user!=null) {
             try {
@@ -47,6 +48,7 @@ public class Profile {
             Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
+        
         return json;
     }
     

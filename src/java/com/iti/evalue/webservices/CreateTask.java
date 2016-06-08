@@ -7,6 +7,7 @@ package com.iti.evalue.webservices;
 
 import com.iti.evalue.business.CategoryBusiness;
 import com.iti.evalue.business.TaskBusiness;
+import com.iti.evalue.business.TypeBusiness;
 import com.iti.evalue.business.UserBusiness;
 import com.iti.evalue.entities.Category;
 import com.iti.evalue.entities.Task;
@@ -16,7 +17,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -38,30 +38,31 @@ public class CreateTask {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/simpletask")
-    public JSONObject simpleTask(@QueryParam("name")String name, @QueryParam("description")String description,
-            @QueryParam("category")String category , @QueryParam("startdate")String startdate,
-             @QueryParam("enddate")String enddate,  @QueryParam("username")String username) 
+    @Path("/task")
+    public JSONObject createTask(@QueryParam("taskname")String name, @QueryParam("description")String description,
+            @QueryParam("category")String categoryName, @QueryParam("type") String typeName, @QueryParam("startdate")String startDate,
+             @QueryParam("enddate")String endDate,  @QueryParam("ownername")String username) 
     {
-        CategoryBusiness cd = new CategoryBusiness();
+        CategoryBusiness cb = new CategoryBusiness();
+        TypeBusiness tyb = new TypeBusiness();
         TaskBusiness tb = new TaskBusiness();
-        UserBusiness cb = new UserBusiness();
+        UserBusiness ub = new UserBusiness();
         JSONObject jo = new JSONObject();
         String result = "unsaved";
-        Date sDate= new Date();
-        Date eDate = new Date();
+        Date sDate = null;
+        Date eDate = null;
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        if(name!=null && description!=null && category!=null && startdate!=null && enddate!=null && username!=null) {
+        if(name!=null && categoryName!=null && typeName !=null && startDate!=null && endDate!=null && username!=null) {
             try {
-            sDate =  df.parse(startdate);
-            eDate = df.parse(enddate);    
+            sDate =  df.parse(startDate);
+            eDate = df.parse(endDate);    
         } catch (ParseException ex) {
             Logger.getLogger(CreateTask.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Category c = cd.getCategoryId(category);
-        Type t = new Type(1);
-        Users s = cb.viewUser(username);
-        Task task = new Task(name, description, c, sDate,eDate,t,s,0,"");
+        Category category = cb.getCategoryByName(categoryName);
+        Type type = tyb.getTypebyName(typeName);
+        Users user = ub.viewUser(username);
+        Task task = new Task(name, description, category, type, sDate, eDate, user);
         result = tb.addTask(task);
         }
         try {
@@ -71,4 +72,20 @@ public class CreateTask {
         }
         return jo;
     }
+    
+//    @GET
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("/milestone")
+//    public void createMilestones(@QueryParam("taskname") String taskName, @QueryParam("name") String name, @QueryParam("description") String description, @QueryParam("startdate") String startDate, @QueryParam("enddate0") String endDate) {
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//        Date sDate;
+//        Date eDate;
+//        try {
+//            sDate = df.parse(startDate);
+//            eDate = df.parse(endDate);
+//        } catch (ParseException ex) {
+//            Logger.getLogger(CreateTask.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

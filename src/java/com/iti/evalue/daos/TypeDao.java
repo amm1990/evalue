@@ -17,12 +17,12 @@ import org.hibernate.SessionFactory;
  * @author Aya Mahmoud
  */
 public class TypeDao {
-    SessionFactory sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    SessionFactory sessionFactory;
     Session session;
     
-//    public TypeDao() {
-//        session = sessionFactory.openSession();
-//    }
+    public TypeDao() {
+        sessionFactory = SessionFactoryProvider.getInstance().sessionFactory;
+    }
     
     // Insert New Type
       public void typeAdd(Type newType){
@@ -75,4 +75,12 @@ public class TypeDao {
 //        session.close();
         return type;
      }
+     
+    public Type selectByName(String name) {
+        session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Type type = (Type) session.createQuery("from Type where name = '" + name + "'").uniqueResult();
+        session.getTransaction().commit();
+        return type;
+    }
 }
