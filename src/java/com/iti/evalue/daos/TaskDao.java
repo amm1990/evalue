@@ -79,6 +79,14 @@ public class TaskDao {
         return task;
     } 
      
+    public Task selectByName(String name) {
+        session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Task task = (Task) session.createQuery("from Task where name = '" + name + "'").uniqueResult();
+        session.getTransaction().commit();
+        return task;
+    }
+     
          //select task id by owner_id and task_name
      public int selectByOwnerIdAndTaskName(int ownerId , String taskName){
          

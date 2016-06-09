@@ -109,7 +109,7 @@ public class Task implements Serializable {
         this.progress = progress;
     }
     
-    public Task(String taskName, String description, Category category, Type type, Date startDate, Date endDate, Users owner) {
+    public Task(String taskName, String description, Category category, Type type, Date startDate, Date endDate, Users owner, Task parentTask) {
         this.name = taskName;
         this.description = description;
         this.categoryId = category;
@@ -117,6 +117,7 @@ public class Task implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.ownerId = owner;
+        this.parentid = parentTask;
     } 
 
     public Integer getId() {
