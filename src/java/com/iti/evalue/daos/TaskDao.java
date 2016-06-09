@@ -83,6 +83,7 @@ public class TaskDao {
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Task task = (Task) session.createQuery("from Task where name = '" + name + "'").uniqueResult();
+        System.out.println("task in dao is null");
         if(task!=null) {
             Hibernate.initialize(task.getUsersList());
         }

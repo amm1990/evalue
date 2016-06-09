@@ -115,8 +115,6 @@ public class TaskBusiness {
         boolean deleted = false;
         Task task = td.selectByName(name);
         if (task != null) {
-            //task.setUsersList(null);
-            System.out.println("task is not null");
             deleted = td.deleteTask(task);
         }
         return deleted;
@@ -130,5 +128,17 @@ public class TaskBusiness {
             added = true;
         }
         return added;
+    }
+    public boolean removeUserFromTask(Task task, Users user) {
+        boolean removed = false;
+        if(task!=null && user!=null) {
+            List users = task.getUsersList();
+            if(users.contains(user)) {
+                users.remove(user);
+                td.updateTask(task);
+                removed = true;
+            }
+        }
+        return removed;
     }
 }

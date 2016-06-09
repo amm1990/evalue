@@ -38,7 +38,7 @@ public class TaskServices {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/cretae")
+    @Path("/create")
     public JSONObject createTask(@QueryParam("taskname") String name, @QueryParam("description") String description,
             @QueryParam("category") String categoryName, @QueryParam("type") String typeName, @QueryParam("startdate") String startDate,
             @QueryParam("enddate") String endDate, @QueryParam("ownername") String ownerName, @QueryParam("parent_id") String parentTaskId) {
@@ -90,11 +90,6 @@ public class TaskServices {
         return jo;
     }
 
-    //useless??
-    public void editTask(@QueryParam("id") String taskId, @QueryParam("taskname") String name, @QueryParam("description") String description) {
-
-    }
-
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -122,7 +117,7 @@ public class TaskServices {
         if (user != null && task != null) {
             Users u = ub.viewUser(user);
             Task t = tb.getTaskByName(task);
-            if(tb.assignUserToTask(t, u)) {
+            if (tb.assignUserToTask(t, u)) {
                 added = "added";
             }
         }
@@ -134,4 +129,27 @@ public class TaskServices {
         return json;
     }
 
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/removeuser")
+    public JSONObject removeUser(@QueryParam("user") String user, @QueryParam("task") String task) {
+        UserBusiness ub = new UserBusiness();
+        TaskBusiness tb = new TaskBusiness();
+        JSONObject json = new JSONObject();
+        String removed = "not_removed";
+        if (user != null && task != null) {
+            Users u = ub.viewUser(user);
+            Task t = tb.getTaskByName(task);
+            if (tb.removeUserFromTask(t, u)) {
+                removed = "removed";
+            }
+        }
+        try {
+            json.put("removed", removed);
+        } catch (JSONException ex) {
+            Logger.getLogger(TaskServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
 }
