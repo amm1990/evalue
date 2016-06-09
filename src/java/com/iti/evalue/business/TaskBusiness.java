@@ -109,4 +109,26 @@ public class TaskBusiness {
         }
         return b;
     }
+
+    //used for task deletion
+    public boolean deleteTask(String name) {
+        boolean deleted = false;
+        Task task = td.selectByName(name);
+        if (task != null) {
+            //task.setUsersList(null);
+            System.out.println("task is not null");
+            deleted = td.deleteTask(task);
+        }
+        return deleted;
+    }
+
+    public boolean assignUserToTask(Task task, Users user) {
+        boolean added = false;
+        if (task != null && user != null) {
+            task.getUsersList().add(user);
+            td.updateTask(task);
+            added = true;
+        }
+        return added;
+    }
 }

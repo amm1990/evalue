@@ -48,7 +48,6 @@ public class TaskList {
                 jo.put("type", task.getTypeId().getName());
                 jo.put("evaluation", task.getEvaluation());
                 jo.put("progress", task.getProgress());
-                String taskKey = "task" + i;
                 json.put(jo);
             } catch (JSONException ex) {
                 Logger.getLogger(TaskList.class.getName()).log(Level.SEVERE, null, ex);

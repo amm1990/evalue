@@ -83,6 +83,9 @@ public class TaskDao {
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Task task = (Task) session.createQuery("from Task where name = '" + name + "'").uniqueResult();
+        if(task!=null) {
+            Hibernate.initialize(task.getUsersList());
+        }
         session.getTransaction().commit();
         return task;
     }
