@@ -115,7 +115,14 @@ public class TaskBusiness {
         boolean deleted = false;
         Task task = td.selectByName(name);
         if (task != null) {
+            for(int i=0; i<task.getTaskList().size(); i++) {
+                td.deleteTask(task.getTaskList().get(i));
+            }
+            System.out.println("before update");
+            //td.updateTask(task);
+            System.out.println("after update");
             deleted = td.deleteTask(task);
+            System.out.println("after delete");
         }
         return deleted;
     }
@@ -129,11 +136,12 @@ public class TaskBusiness {
         }
         return added;
     }
+
     public boolean removeUserFromTask(Task task, Users user) {
         boolean removed = false;
-        if(task!=null && user!=null) {
+        if (task != null && user != null) {
             List users = task.getUsersList();
-            if(users.contains(user)) {
+            if (users.contains(user)) {
                 users.remove(user);
                 td.updateTask(task);
                 removed = true;

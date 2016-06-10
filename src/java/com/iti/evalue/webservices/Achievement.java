@@ -55,4 +55,6 @@ public class Achievement {
 //parent and team leader need to verify progress
 
 ///need a field for the member to submit their progress
-//need another field for the owner to confirm the evaluation*/
+//need another field for the owner to confirm the evaluation
+need a field to set the milestone percentage of the task
+when the task is a parent or team task where will the achievement be submitted???*/
