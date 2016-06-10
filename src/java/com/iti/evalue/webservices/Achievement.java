@@ -25,7 +25,7 @@ import org.codehaus.jettison.json.JSONObject;
 @Path("/achievement")
 public class Achievement {
         
-     @GET
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/addAchievement")
@@ -47,3 +47,12 @@ public class Achievement {
         return jo;   
     }   
 }
+
+/*//achievement is submitted for a milestone not for the whole task,
+//a user sets a milestone with a PERCENTAGE OF THE TASK ACHIEVEMENT
+//two fields achievement .. progresss
+//child and team member need to submit progress for each milestone
+//parent and team leader need to verify progress
+
+///need a field for the member to submit their progress
+//need another field for the owner to confirm the evaluation*/
