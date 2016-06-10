@@ -73,10 +73,11 @@ public class TaskServices {
                 user = ub.viewUser(ownerName);
                 task = new Task(name, description, category, type, sDate, eDate, user, null);
             } else if (parentTaskId != null && categoryName == null && typeName == null && ownerName == null) {
-                parentTask = tb.getTaskByName(name);
+                parentTask = tb.getTaskByName(parentTaskId);
                 category = parentTask.getCategoryId();
                 type = parentTask.getTypeId();
-                task = new Task(name, description, category, type, sDate, eDate, null, parentTask);
+                user = parentTask.getOwnerId();
+                task = new Task(name, description, category, type, sDate, eDate, user, parentTask);
 
             }
             if (task != null) {
