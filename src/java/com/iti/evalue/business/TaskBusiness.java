@@ -68,6 +68,15 @@ public class TaskBusiness {
         return tasks;
     }
 
+    public List getMilestones(String name) {
+        List milestones = null;
+        if (name != null) {
+            Task task = getTaskByName(name);
+            milestones = task.getTaskList();
+        }
+        return milestones;
+    }
+
     //used to insert new task and milestone
     public int addTask(Task task) {
         Task existing = getTaskByName(task.getName());
