@@ -37,8 +37,10 @@ public class TaskBusiness {
                 List membertasklist = user.getTaskList();
                 for (int i = 0; i < membertasklist.size(); i++) {
                     Task task = (Task) membertasklist.get(i);
-                    if (task.getEndDate().compareTo(new Date()) > 0) {
-                        tasks.add(task);
+                    if (task.getParentid() == null) {
+                        if (task.getEndDate().compareTo(new Date()) > 0) {
+                            tasks.add(task);
+                        }
                     }
                 }
             }
@@ -55,8 +57,10 @@ public class TaskBusiness {
                 List ownertasklist = user.getTaskList1();
                 for (int i = 0; i < ownertasklist.size(); i++) {
                     Task task = (Task) ownertasklist.get(i);
-                    if (task.getEndDate().compareTo(new Date()) > 0) {
-                        tasks.add(task);
+                    if (task.getParentid() == null) {
+                        if (task.getEndDate().compareTo(new Date()) > 0) {
+                            tasks.add(task);
+                        }
                     }
                 }
             }
