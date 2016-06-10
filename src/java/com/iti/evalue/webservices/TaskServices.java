@@ -157,13 +157,41 @@ public class TaskServices {
     }
 
     @GET
-    @Path("/activetasks")
+    @Path("/usertasks")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public JSONArray getActiveTasks(@QueryParam("name") String name) {
+    public JSONArray getUserTasks(@QueryParam("name") String name) {
         JSONArray json = new JSONArray();
         TaskBusiness tb = new TaskBusiness();
-        List<Task> tasks = tb.getActiveTasks(name);
+        List<Task> tasks = tb.getUserTasks(name);
+        for (int i = 0; i < tasks.size(); i++) {
+            JSONObject jo = new JSONObject();
+            Task task = (Task) tasks.get(i);
+            try {
+                jo.put("name", task.getName());
+                jo.put("description", task.getDescription());
+                jo.put("category", task.getCategoryId().getName());
+                jo.put("startdate", task.getStartDate());
+                jo.put("enddate", task.getEndDate());
+                jo.put("type", task.getTypeId().getName());
+                jo.put("evaluation", task.getEvaluation());
+                jo.put("progress", task.getProgress());
+                json.put(jo);
+            } catch (JSONException ex) {
+                Logger.getLogger(TaskServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return json;
+    }
+
+    @GET
+    @Path("/ownertasks")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public JSONArray getOwnerTasks(@QueryParam("name") String name) {
+        JSONArray json = new JSONArray();
+        TaskBusiness tb = new TaskBusiness();
+        List<Task> tasks = tb.getOwnerTasks(name);
         for (int i = 0; i < tasks.size(); i++) {
             JSONObject jo = new JSONObject();
             Task task = (Task) tasks.get(i);

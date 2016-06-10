@@ -28,20 +28,31 @@ public class TaskBusiness {
         ud = new UserDao();
     }
 
-    public List getActiveTasks(String name) {
+    public List getUserTasks(String name) {
 
         ArrayList tasks = new ArrayList();
         if (name != null) {
             Users user = ud.selectByUser(name);
             if (user != null) {
                 List membertasklist = user.getTaskList();
-                List ownertasklist = user.getTaskList1();
                 for (int i = 0; i < membertasklist.size(); i++) {
                     Task task = (Task) membertasklist.get(i);
                     if (task.getEndDate().compareTo(new Date()) > 0) {
                         tasks.add(task);
                     }
                 }
+            }
+        }
+        return tasks;
+    }
+
+    public List getOwnerTasks(String name) {
+
+        ArrayList tasks = new ArrayList();
+        if (name != null) {
+            Users user = ud.selectByUser(name);
+            if (user != null) {
+                List ownertasklist = user.getTaskList1();
                 for (int i = 0; i < ownertasklist.size(); i++) {
                     Task task = (Task) ownertasklist.get(i);
                     if (task.getEndDate().compareTo(new Date()) > 0) {
