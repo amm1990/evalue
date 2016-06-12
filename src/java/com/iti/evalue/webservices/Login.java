@@ -10,11 +10,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import com.iti.evalue.entities.Users;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -29,18 +31,18 @@ public class Login {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/verify")
-    public JSONObject logUser(@QueryParam("name")String name, @QueryParam("password")String password) {
+    public JSONObject logUser(@QueryParam("name") String name, @QueryParam("password") String password) {
         UserBusiness ub = new UserBusiness();
         Users user;
         String credentials = "invalid";
         int userId = 0;
         int parentId = 0;
         user = ub.login(name, password);
-        if(user!=null) {
+        if (user != null) {
             credentials = "valid";
             userId = user.getId();
             Users parent = user.getParentId();
-            if(parent!=null) {
+            if (parent != null) {
                 parentId = parent.getId();
             }
         }
@@ -54,18 +56,18 @@ public class Login {
         }
         return jo;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/checkname")
-    public JSONObject checkName(@QueryParam("name")String name) {
+    public JSONObject checkName(@QueryParam("name") String name) {
         JSONObject json = new JSONObject();
         UserBusiness ub = new UserBusiness();
         String watch = "doesn't_exist";
         boolean exists = false;
         exists = ub.checkNameExists(name);
-        if(exists) {
+        if (exists) {
             watch = "exists";
         }
         try {
@@ -75,7 +77,7 @@ public class Login {
         }
         return json;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -86,16 +88,43 @@ public class Login {
         String update = "not_updated";
         boolean updated = false;
         Users user = ub.viewUser(name);
-        if(user!=null) {
+        if (user != null) {
             updated = ub.sendPasswordMail(user);
         }
-        if(updated) {
+        if (updated) {
             update = "updated";
         }
         try {
             json.put("changed", update);
         } catch (JSONException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/childaccounts")
+    public JSONArray selectChildAccounts(@QueryParam("parent_name") String parent_name) {
+        JSONArray json = new JSONArray();
+        UserBusiness ub = new UserBusiness();
+        if (parent_name != null) {
+
+        }
+        List<Users> children = ub.getChildAccounts(parent_name);
+        for (int i = 0; i < children.size(); i++) {
+            JSONObject jo = new JSONObject();
+            try {
+                jo.put("name", children.get(i).getName());
+                jo.put("gender", children.get(i).getGender());
+                jo.put("email", children.get(i).getEmail());
+                jo.put("id", children.get(i).getId());
+                jo.put("image", children.get(i).getImage());
+                json.put(jo);
+            } catch (JSONException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return json;
     }

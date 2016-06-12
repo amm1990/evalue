@@ -9,6 +9,7 @@ import com.iti.evalue.daos.UserDao;
 import com.iti.evalue.entities.Users;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,6 +106,15 @@ public class UserBusiness {
             updated = true;
         }
         return updated;
+    }
+    
+    public List<Users> getChildAccounts(String parent_name) {
+        List<Users> children = null;
+        Users parent = ud.selectByUser(parent_name);
+        if(parent!=null) {
+            children = parent.getUsersList();
+        }
+        return children;
     }
     
     public boolean sendPasswordMail(Users user) {
