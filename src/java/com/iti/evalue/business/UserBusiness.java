@@ -34,12 +34,13 @@ public class UserBusiness {
     ///used for registration service
     public String register(Users u) {
         String result = "failed";
-        Users u1;
+        Users u1 = null;
         Users u2;
-        //need to check if parent id is null 
-        if ((u.getEmail() != null) && (u.getName() != null) && (u.getGender() != null) && (u.getPassword() != null)) {
-            u1 = ud.selectByEmail(u.getEmail());
+        if ((u.getName() != null) && (u.getGender() != null) && (u.getPassword() != null)) {
             u2 = ud.selectByUser(u.getName());
+            if(u.getEmail()!=null) {
+                u1 = ud.selectByEmail(u.getEmail());
+            }
             if(u1!=null && u2!=null) {
             result = "both";
             }

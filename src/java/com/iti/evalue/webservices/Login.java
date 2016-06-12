@@ -120,7 +120,7 @@ public class Login {
                 jo.put("gender", children.get(i).getGender());
                 jo.put("email", children.get(i).getEmail());
                 jo.put("id", children.get(i).getId());
-                jo.put("image", children.get(i).getImage());
+                //jo.put("image", children.get(i).getImage());
                 json.put(jo);
             } catch (JSONException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

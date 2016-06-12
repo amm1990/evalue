@@ -86,11 +86,12 @@ public class Users implements Serializable {
         this.password = password;
     }
     
-    public Users(String parentId, String name, String password, String email, String gender) {
+    public Users(Users parentId, String name, String password, String email, String gender) {
         this.name = name;
         this.gender = gender;
         this.password = password;
         this.email = email;
+        this.parentId = parentId;
     }
 
     public Integer getId() {
