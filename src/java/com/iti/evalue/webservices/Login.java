@@ -110,22 +110,22 @@ public class Login {
         JSONArray json = new JSONArray();
         UserBusiness ub = new UserBusiness();
         if (parent_name != null) {
-
-        }
-        List<Users> children = ub.getChildAccounts(parent_name);
-        for (int i = 0; i < children.size(); i++) {
-            JSONObject jo = new JSONObject();
-            try {
-                jo.put("name", children.get(i).getName());
-                jo.put("gender", children.get(i).getGender());
-                jo.put("email", children.get(i).getEmail());
-                jo.put("id", children.get(i).getId());
-                //jo.put("image", children.get(i).getImage());
-                json.put(jo);
-            } catch (JSONException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            List<Users> children = ub.getChildAccounts(parent_name);
+            for (int i = 0; i < children.size(); i++) {
+                JSONObject jo = new JSONObject();
+                try {
+                    jo.put("name", children.get(i).getName());
+                    jo.put("gender", children.get(i).getGender());
+                    jo.put("email", children.get(i).getEmail());
+                    jo.put("id", children.get(i).getId());
+                    //jo.put("image", children.get(i).getImage());
+                    json.put(jo);
+                } catch (JSONException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
         return json;
     }
 }
