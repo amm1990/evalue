@@ -66,6 +66,7 @@ public class UserDao {
         if(user!=null) {
             Hibernate.initialize(user.getTaskList());
             Hibernate.initialize(user.getTaskList1());
+            Hibernate.initialize(user.getUsersList());
         }
         session.getTransaction().commit();
         return user;
