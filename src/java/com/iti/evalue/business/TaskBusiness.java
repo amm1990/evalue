@@ -164,7 +164,7 @@ public class TaskBusiness {
         if (task != null && user != null) {
             List users = task.getUsersList();
             if (users.contains(user)) {
-                users.remove(user);
+                task.getUsersList().remove(user);
                 td.updateTask(task);
                 removed = true;
             }
