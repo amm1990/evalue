@@ -150,9 +150,11 @@ public class TaskBusiness {
     public boolean assignUserToTask(Task task, Users user) {
         boolean added = false;
         if (task != null && user != null) {
-            task.getUsersList().add(user);
-            td.updateTask(task);
-            added = true;
+            if (!task.getUsersList().contains(user)) {
+                task.getUsersList().add(user);
+                td.updateTask(task);
+                added = true;
+            }
         }
         return added;
     }
