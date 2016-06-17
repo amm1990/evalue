@@ -211,4 +211,35 @@ public class TaskServices {
         }
         return json;
     }
+
+    @GET
+    @Path("/milestones")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public JSONArray getMilestones(@QueryParam("task_name") String name) {
+        JSONArray json = new JSONArray();
+        TaskBusiness tb = new TaskBusiness();
+        List<Task> milestones = tb.getTaskMilestones(name);
+        System.out.println("milestoneis is null");
+        if (milestones != null) {
+            System.out.println("milestoneis not null");
+            for (int i = 0; i < milestones.size(); i++) {
+
+                JSONObject jo = new JSONObject();
+                Task milestone = milestones.get(i);
+                try {
+                    jo.put("name", milestone.getName());
+                    jo.put("description", milestone.getDescription());
+                    jo.put("startdate", milestone.getStartDate());
+                    jo.put("enddate", milestone.getEndDate());
+                    jo.put("evaluation", milestone.getEvaluation());
+                    jo.put("progress", milestone.getProgress());
+                    json.put(jo);
+                } catch (JSONException ex) {
+                    Logger.getLogger(TaskServices.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return json;
+    }
 }
