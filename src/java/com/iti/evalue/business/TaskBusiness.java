@@ -171,4 +171,13 @@ public class TaskBusiness {
         }
         return removed;
     }
+
+    public List<Task> getTaskMilestones(String name) {
+        List<Task> milestones = null;
+        Task parent = td.selectByName(name);
+        if(parent!=null) {
+            milestones = parent.getTaskList();
+        }
+        return milestones;
+    }
 }
